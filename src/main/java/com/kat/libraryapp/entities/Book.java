@@ -1,13 +1,19 @@
 package com.kat.libraryapp.entities;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String title;
     private String lsbn;
     private String publisher;
+    @ManyToMany
     private Set<Author> authors = new HashSet<>();
 
     public Book(String title, String lsbn, String publisher) {
@@ -21,6 +27,14 @@ public class Book {
         this.lsbn = lsbn;
         this.publisher = publisher;
         this.authors = authors;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
