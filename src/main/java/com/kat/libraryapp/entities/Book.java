@@ -14,6 +14,8 @@ public class Book {
     private String lsbn;
     private String publisher;
     @ManyToMany
+    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
     public Book(String title, String lsbn, String publisher) {
