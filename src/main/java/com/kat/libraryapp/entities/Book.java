@@ -2,6 +2,7 @@ package com.kat.libraryapp.entities;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String title;
-    private String lsbn;
+    private String isbn;
     private String publisher;
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
@@ -20,13 +21,13 @@ public class Book {
 
     public Book(String title, String lsbn, String publisher) {
         this.title = title;
-        this.lsbn = lsbn;
+        this.isbn = lsbn;
         this.publisher = publisher;
     }
 
     public Book(String title, String lsbn, String publisher, Set<Author> authors) {
         this.title = title;
-        this.lsbn = lsbn;
+        this.isbn = lsbn;
         this.publisher = publisher;
         this.authors = authors;
     }
@@ -48,11 +49,11 @@ public class Book {
     }
 
     public String getLsbn() {
-        return lsbn;
+        return isbn;
     }
 
     public void setLsbn(String lsbn) {
-        this.lsbn = lsbn;
+        this.isbn = lsbn;
     }
 
     public String getPublisher() {
@@ -69,5 +70,29 @@ public class Book {
 
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return id == book.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", authors=" + authors +
+                '}';
     }
 }
